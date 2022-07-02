@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="covid.css" />
+    <title>Covid-19 Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Covid-!19 Tracker</h1>
+        <input type="text" class="inputElement" />
+        <button class="btn">get data</button>
+        <br />
+        <br />
+        <div id="container">
+            <div class="activeCaseDiv"> 
+                Active cases 
+                <p class="activeCase"></p> 
+            </div>
+            <div class="newCaseDiv"> 
+                newelly cases  
+                <p class="newCase"></p> 
+            </div>
+            <div class="recoveredCaseDiv"> 
+                Recovrd cases  
+                <p class="recoveredCase"></p> 
+            </div>      
+        </div>
+       <br />
+       <div id="container">
+
+            <div class="totalCaseDiv"> 
+                total cases  
+                <p class="totalCase"></p> 
+            </div>
+            <div class="totalDeathsDiv"> 
+                total Deaths 
+                <p class="totalDeaths"></p> 
+            </div>
+            <div class="totalTestsDiv"> 
+                Total Tests
+                <p class="totalTests"></p> 
+            </div>      
+        </div>
+    </div>
+    <script>
+        const btn = document.querySelector(".btn");
+        const inputElement = document.querySelector(".inputElement");
+        
+        btn.addEventListener("click",getData);           
+
+ function getData() {
+            let country = inputElement.value;
+            fetch(`https://covid-193.p.rapidapi.com/statistics?,country=${country}`,
+            {
+
+	method: 'GET' ,
+	headers: {
+		'X-RapidAPI-Key': 'edc0537f3fmshaf1482c85a75f9cp13a8cbjsn5f16462168dd',
+		'X-RapidAPI-Host': 'covid-193.p.rapidapi.com' 
+	},
+})
+.then((response) => response.json())
+.then((json) => {
+    let data = json.response;
+    document.querySelector(".activeCases").innerHTML = data.cases.active;
+    document.querySelector(".neweCases").innerHTML = data.cases.new;
+    document.querySelector(".recoveredCases").innerHTML = data.cases.recovered;
+         console.log(data.cases.recovered);
+    document.querySelector(".totalCases").innerHTML = data.cases.total;
+    document.querySelector(".totalTest").innerHTML = data.test.active;
+    document.querySelector(".totalDeaths").innerHTML = data.Death.new;
+});
+ }
+    </script>
+</body>
+</html>
